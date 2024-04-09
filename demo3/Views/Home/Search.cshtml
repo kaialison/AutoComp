@@ -1,0 +1,98 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Giao diện trang web ô tô</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url("path/to/your/image.jpg");
+            background-color: #f1f8ff;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        .search-form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 100px;
+        }
+
+        .search-input {
+            width: 400px;
+            height: 40px;
+            padding: 5px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+        }
+
+        .search-button {
+            height: 40px;
+            margin-left: 10px;
+            padding: 0 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .suggest-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+
+            .suggest-list li {
+                padding: 5px;
+                background-color: #fff;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+                .suggest-list li:hover {
+                    background-color: #f1f1f1;
+                }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="search-form">
+            <input type="text" id="search-input" class="search-input form-control" placeholder="Nhập từ khóa tìm kiếm">
+            <button id="search-button" class="search-button btn btn-primary">Tìm kiếm</button>
+        </div>
+        <ul id="suggestionsList" class="suggest-list"></ul>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#searchInput").on("input", function () {
+                var keyword = $(this).val();
+
+                // Gửi yêu cầu AJAX để lấy danh sách gợi ý từ API
+                $.ajax({
+                    url: "/api/suggestions",
+                    data: { keyword: keyword },
+                    success: function (data) {
+                        // Xử lý dữ liệu gợi ý và hiển thị lên giao diện người dùng
+                        var suggestions = data.map(function (item) {
+                            return "<li>" + item + "</li>";
+                        });
+                        $("#suggestionsList").html(suggestions);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

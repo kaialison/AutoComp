@@ -1,0 +1,127 @@
+﻿@model demo3.Models.Xse
+
+@{
+    Layout = null;
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Sua</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        body{
+            margin:0 200px;
+        }
+        .container{
+           margin-top:50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <span class="font-weight-bold" style="font-size:40px">Cập nhật dữ liệu xe</span>
+    </div>
+    <div style="display:flex; justify-content:center;align-items:center; width:100%">
+        @using (Html.BeginForm(new { enctype = "multipart/form-data", @class = "container" }))
+        {
+            <div style="padding:100px 100px; box-shadow: 0px 5px 10px rgb(0,0,0,0.5); border-radius:10px; display:flex;flex-wrap:wrap; justify-content:space-around">
+                <div class="form-group">
+                    <label>Mã xe</label>
+                    <input type="text" class="form-control" id="Maxe" name="Maxe" value="@Model.Maxe" disabled />
+                </div>
+
+                <div class="form-group">
+                    <label>Tên hãng</label>
+                    <input type="text" class="form-control" id="Tenhang" name="Tenhang" value="@Model.Tenhang" />
+                </div>
+
+                <div class="form-group">
+                    <label>Phiên bản</label>
+                    <input type="text" class="form-control" id="Phienban" name="Phienban" value="@Model.Phienban" />
+                </div>
+
+                <div class="form-group">
+                    <label>Loại xe</label>
+                    <input type="text" class="form-control" id="Loaixe" name="Loaixe" value="@Model.Loaixe" />
+                </div>
+
+                <div class="form-group">
+                    <label>Phân khúc</label>
+                    <input type="text" class="form-control" id="Phankhuc" name="Phankhuc" value="@Model.Phankhuc" />
+                </div>
+
+                <div class="form-group">
+                    <label>Kiểu động cơ</label>
+                    <input type="text" class="form-control" id="Kieudongco" name="Kieudongco" value="@Model.Kieudongco" />
+                </div>
+
+                <div class="form-group">
+                    <label>Hộp số</label>
+                    <input type="text" class="form-control" id="Hopso" name="Hopso" value="@Model.Hopso" />
+                </div>
+
+                <div class="form-group">
+                    <label>Dung tích</label>
+                    <input type="text" class="form-control" id="Dungtich" name="Dungtich" value="@Model.Dungtich" />
+                </div>
+
+                <div class="form-group">
+                    <label>Công suất</label>
+                    <input type="number" class="form-control" id="Congsuat" name="Congsuat" value="@Model.Congsuat" />
+                </div>
+
+                <div class="form-group">
+                    <label>Mô-men</label>
+                    <input type="text" class="form-control" id="Momen" name="Momen" value="@Model.Momen" />
+                </div>
+
+                <div class="form-group">
+                    <label>Số ghế</label>
+                    <input type="number" class="form-control" id="Soghe" name="Soghe" value="@Model.Soghe" />
+                </div>
+
+                <div class="form-group">
+                    <label>Kích thước</label>
+                    <input type="text" class="form-control" id="Kickthuoc" name="Kickthuoc" value="@Model.Kickthuoc" />
+                </div>
+
+                <div class="form-group">
+                    <label>Chiều dài cơ sở</label>
+                    <input type="number" class="form-control" id="Cieudaicoso" name="Cieudaicoso" value="@Model.Cieudaicoso" />
+                </div>
+
+                <div class="form-group">
+                    <label>Khoảng sáng gầm</label>
+                    <input type="number" class="form-control" id="Khoangsanggam" name="Khoangsanggam" value="@Model.Khoangsanggam" />
+                </div>
+
+                <div class="form-group">
+                    <label>Số túi khí</label>
+                    <input type="number" class="form-control" id="Sotuikhi" name="Sotuikhi" value="@Model.Sotuikhi" />
+                </div>
+
+                <div class="form-group">
+                    <label>Giá tham khảo</label>
+                    <input type="number" placeholder="triệu VND" class="form-control" id="Giathamkhao" name="Giathamkhao" value="@Model.Giathamkhao" />
+                </div>
+
+                <div class="form-group">
+                    <label>Ảnh</label>
+                    <input type="file" name="Anhxe" accept="image/*" />
+                </div>
+                <div class="form-group text-center">
+                    <button class="btn btn-primary" type="submit">Lưu</button>
+                    <input class="btn btn-primary" type="button" value="Trở lại" onclick="location.href='@Url.Action("Index", "Home")'" />
+                </div>
+            </div>
+        }
+    </div>
+    
+
+
+</body>
+</html>

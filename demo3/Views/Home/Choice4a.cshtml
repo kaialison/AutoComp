@@ -1,0 +1,1068 @@
+﻿@{
+    Layout = null;
+    XehoifinalContext db = new XehoifinalContext();
+    List<Xse> list = new List<Xse>();
+    var q = from a in db.Xses
+            select a;
+    list = q.ToList();
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>So sánh 4 xe</title>
+    <style>
+        body{
+            style ="background-color:#f4f4f4";
+        }
+/*        td,
+        th{
+            border: 2px solid black;
+        }*/
+        table{
+            margin-right: 200px;
+            margin-left: 200px;
+        }
+        table tr th {
+            width: 50vw;
+            height: 100px;
+        }
+
+        table tr td {
+            min-height: 100px;
+            width: 100vw;
+            /*            text-align: center;
+        */
+        }
+        img{
+            width:150px;
+            height:100px;
+            border-radius:10px;
+        }
+
+        /*     #col1 {
+                    width: 10vw;
+                    background-color: rgb(231, 229, 229);
+                    display:none;
+                }*/
+        #sosanh1 {
+            background-color: rgb(247,247,247);
+        }
+        #sosanh1 > div {
+                width: 25%;
+            }
+        #sosanh2{
+            background-color: rgb(255,255,255);
+        }
+        #sosanh2 > div{
+                width: 25%;
+            }
+/*        table tr {
+            border: 10px solid white;
+        }*/
+
+        .s1 {
+            color: white;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-weight: bold;
+            font-size: 30px;
+        }
+
+            .s1:hover {
+                color: black;
+                text-decoration: none;
+            }
+
+
+
+        nav {
+            background-color: rgb(63,101,212);
+        }
+
+
+        .maxcolor {
+            color: red;
+        }
+
+    </style>
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <!--Navigation bar-->
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgb(63,101,212); position: fixed; top: 0; width:100%">
+        <a class="navbar-brand" href="@Url.Action("Homepage", "Home")">AutoComp</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item ">
+                    <a class="nav-link" href="@Url.Action("Homepage", "Home")">Trang chủ</a>
+                </li>
+                <li class="nav-item dropdown active">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        So sánh xe
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="@Url.Action("Choice2", "Home")"> 2 xe</a>
+                        <a class="dropdown-item" href="@Url.Action("Choice3", "Home")"> 3 xe</a>
+                        <a class="dropdown-item" href="@Url.Action("Choice4", "Home")"> 4 xe</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- Button to trigger the modal -->
+    @*    <div id="center">
+    <button type="button" class="btn btn-primary" onclick="show()">Click Me</button>
+    </div>*@
+    <form id="dataForm" action="/Home/Choice4gui" method="post">
+@*        <button type="submit" class="comp" id="comp">Thực hiện</button>
+
+        <table style="margin-top:100px;" id="sosanh">
+            <tr>
+                <th style="width:20vw"></th>
+                <th>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1">
+                        Chọn xe
+                    </button>
+                </th>
+                <th>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal2">
+                        Chọn xe
+                    </button>
+                </th>
+                <th>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal3">
+                        Chọn xe
+                    </button>
+                </th>
+                <th>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal4">
+                        Chọn xe
+                    </button>
+                </th>
+            </tr>*@
+        <div class="container" style="padding-top:100px">
+            <span class="font-weight-bold" style="font-size:40px">@ViewBag.phienban1 VS @ViewBag.phienban2 VS @ViewBag.phienban3 VS @ViewBag.phienban4</span>
+        </div>
+        <div>
+            <div class="container" style="display:flex; justify-content:space-between; margin-top:50px; text-align:center;">
+            <div class="font-weight-bold" style="height:50px; width:200px; border-radius:10px; box-shadow: 0px 1px 5px rgb(0,0,0,0.5);margin-top:100px; display:flex; justify-content:center;align-items:center;">
+                <div>
+                    Thông số kĩ thuật
+                </div>
+                </div>
+            <div style="height:150px; width:200px; border-radius:10px; box-shadow: 0px 1px 5px rgb(0,0,0,0.5);display:flex; justify-content:center;align-items:center;">
+                <div>
+                    <img src="data:image/jpg;base64,@(Convert.ToBase64String((byte[])ViewBag.anh1))" alt="image"><br />
+                    @ViewBag.phienban1
+                </div>
+            </div>
+            <div style="height:150px; width:200px; border-radius:10px; box-shadow: 0px 1px 5px rgb(0,0,0,0.5);display:flex; justify-content:center;align-items:center;">
+                <div>
+                    <img src="data:image/jpg;base64,@(Convert.ToBase64String((byte[])ViewBag.anh2))" alt="image"><br />
+                    @ViewBag.phienban2
+                </div>
+            </div>
+            <div style="height:150px; width:200px; border-radius:10px; box-shadow: 0px 1px 5px rgb(0,0,0,0.5);display:flex; justify-content:center;align-items:center;">
+                <div>
+                    <img src="data:image/jpg;base64,@(Convert.ToBase64String((byte[])ViewBag.anh3))" alt="image"><br />
+                    @ViewBag.phienban3
+                </div>
+            </div>
+            <div style="height:150px; width:200px; border-radius:10px; box-shadow: 0px 1px 5px rgb(0,0,0,0.5);display:flex; justify-content:center;align-items:center;">
+                <div>
+                    <img src="data:image/jpg;base64,@(Convert.ToBase64String((byte[])ViewBag.anh4))" alt="image"><br />
+                    @ViewBag.phienban4
+                </div>
+            </div>
+            </div>
+            </div>
+        <div class="container" style="display:flex; justify-content:space-between; margin-top:20px; text-align:center;">
+            <div style="min-height:50px; width:200px; border-radius:10px; box-shadow: 0px 1px 5px rgb(0,0,0,0.5)">
+                <div class="font-weight-bold" ; style="padding:10px 0 10px 0;">Thông số chung</div>
+                <div id="sosanh1" style="padding-bottom:10px;">Hãng sản xuất</div>
+                <div id="sosanh2" style="padding-bottom:10px;">Loại xe</div>
+                <div id="sosanh1" style="padding-bottom:10px;">Phân khúc</div>
+            </div>
+            <div style="min-height:150px; width:880px; border-radius:10px; box-shadow: 0px 1px 5px rgb(0,0,0,0.5);">
+                <div style="display:flex; justify-content:space-between; padding:10px 0 10px 0;">
+                    <br />
+                </div>
+                <div  id="sosanh1" style="display:flex; justify-content:space-around; padding-bottom:10px;">
+                    <div style="display:flex; justify-content:center; align-items:center">@ViewBag.hangsx1</div>
+                    <div style="display:flex; justify-content:center; align-items:center">@ViewBag.hangsx2</div>
+                    <div style="display:flex; justify-content:center; align-items:center">@ViewBag.hangsx3</div>
+                    <div style="display:flex; justify-content:center; align-items:center">@ViewBag.hangsx4</div>
+                </div>
+                <div id="sosanh2" style="display:flex; justify-content:space-around; padding-bottom:10px;">
+                    <div style="display:flex; justify-content:center; align-items:center">@ViewBag.loaixe1</div>
+                    <div style="display:flex; justify-content:center; align-items:center">@ViewBag.loaixe2</div>
+                    <div style="display:flex; justify-content:center; align-items:center">@ViewBag.loaixe3</div>
+                    <div style="display:flex; justify-content:center; align-items:center">@ViewBag.loaixe4</div>
+                </div>
+                
+                <div id="sosanh1" style="display:flex; justify-content:space-around; padding-bottom:10px;">
+                    <div style="display:flex; justify-content:center; align-items:center">@ViewBag.phankhuc1</div>
+                    <div style="display:flex; justify-content:center; align-items:center">@ViewBag.phankhuc2</div>
+                    <div style="display:flex; justify-content:center; align-items:center">@ViewBag.phankhuc3</div>
+                    <div style="display:flex; justify-content:center; align-items:center">@ViewBag.phankhuc4</div>
+                </div>
+            </div>
+        </div>
+        <div class="container" style="display:flex; justify-content:space-between; margin-top:20px; text-align:center;">
+            <div style="min-height:50px; width:200px; border-radius:10px; box-shadow: 0px 1px 5px rgb(0,0,0,0.5)">
+                <div class="font-weight-bold" ; style="padding:10px 0 10px 0;">Động cơ</div>
+                <div id="sosanh1" style="padding-bottom:10px;">Hộp số</div>
+                <div id="sosanh2" style="padding-bottom:10px;">Dung tích</div>
+                <div id="sosanh1" style="padding-bottom:10px;">Công suất</div>
+                <div id="sosanh2" style="padding-bottom:10px;">Mô-men</div>
+                <div id="sosanh1" style="padding-bottom:10px;">Kiểu động cơ</div>
+            </div>
+            <div style="min-height:150px; width:880px; border-radius:10px; box-shadow: 0px 1px 5px rgb(0,0,0,0.5);">
+                <div style="display:flex; justify-content:space-between; padding:10px 0 10px 0;">
+                    <br />
+                </div>
+                <div id="sosanh1" style="display:flex; justify-content:space-around; padding-bottom:10px">
+                    <div style="width:25%;display:flex; justify-content:center; align-items:center">@ViewBag.hopso1</div>
+                    <div style="width:25%;display:flex; justify-content:center; align-items:center">@ViewBag.hopso2</div>
+                    <div style="width:25%;display:flex; justify-content:center; align-items:center">@ViewBag.hopso3</div>
+                    <div style="width:25%;display:flex; justify-content:center; align-items:center">@ViewBag.hopso4</div>
+                </div>
+                <div id="sosanh2" style="display:flex; justify-content:space-around; padding-bottom:10px;">
+                    <div style="display:flex; justify-content:center; align-items:center">@ViewBag.dungtich1</div>
+                    <div style="display:flex; justify-content:center; align-items:center">@ViewBag.dungtich2</div>
+                    <div style="display:flex; justify-content:center; align-items:center">@ViewBag.dungtich3</div>
+                    <div style="display:flex; justify-content:center; align-items:center">@ViewBag.dungtich4</div>
+                </div>
+                <div id="sosanh1" style="display:flex; justify-content:space-around; padding-bottom:10px;">
+                    @if (ViewBag.congsuat1 == ViewBag.maxcs && ViewBag.congsuat1 != ViewBag.congsuat2 && ViewBag.congsuat1 != ViewBag.congsuat3 && ViewBag.congsuat1 != ViewBag.congsuat4)
+                    {
+
+                        <div class="maxcolor" style="display:flex; justify-content:center; align-items:center">@ViewBag.congsuat1</div>
+                    }
+                    else
+                    {
+                        <div style="display:flex; justify-content:center; align-items:center">@ViewBag.congsuat1</div>
+                    }
+                    @if (ViewBag.congsuat2 == ViewBag.maxcs && ViewBag.congsuat2 != ViewBag.congsuat1 && ViewBag.congsuat2 != ViewBag.congsuat3 && ViewBag.congsuat2 != ViewBag.congsuat4)
+                    {
+
+                        <div class="maxcolor" style="display:flex; justify-content:center; align-items:center">@ViewBag.congsuat2</div>
+                    }
+                    else
+                    {
+                        <div style="display:flex; justify-content:center; align-items:center">@ViewBag.congsuat2</div>
+                    }
+                    @if (ViewBag.congsuat3 == ViewBag.maxcs && ViewBag.congsuat3 != ViewBag.congsuat2 && ViewBag.congsuat3 != ViewBag.congsuat1 && ViewBag.congsuat3 != ViewBag.congsuat4)
+                    {
+
+                        <div class="maxcolor" style="display:flex; justify-content:center; align-items:center">@ViewBag.congsuat3</div>
+                    }
+                    else
+                    {
+                        <div style="display:flex; justify-content:center; align-items:center">@ViewBag.congsuat3</div>
+                    }
+                    @if (ViewBag.congsuat4 == ViewBag.maxcs && ViewBag.congsuat4 != ViewBag.congsuat2 && ViewBag.congsuat4 != ViewBag.congsuat3 && ViewBag.congsuat4 != ViewBag.congsuat1)
+                    {
+
+                        <div class="maxcolor" style="display:flex; justify-content:center; align-items:center">@ViewBag.congsuat4</div>
+                    }
+                    else
+                    {
+                        <div style="display:flex; justify-content:center; align-items:center">@ViewBag.congsuat4</div>
+                    }
+                    </div>
+                    <div id="sosanh2" style="display:flex; justify-content:space-around; padding-bottom:10px;">
+                @if (ViewBag.momen1 == ViewBag.maxmm && ViewBag.momen1 != ViewBag.momen2 && ViewBag.momen1 != ViewBag.momen3 && ViewBag.momen1 != ViewBag.momen4)
+                {
+
+                    <div class="maxcolor" style="display:flex; justify-content:center; align-items:center">@ViewBag.momen1</div>
+                }
+                else
+                {
+                    <div style="display:flex; justify-content:center; align-items:center">@ViewBag.momen1</div>
+                }
+                @if (ViewBag.momen2 == ViewBag.maxmm && ViewBag.momen2 != ViewBag.momen1 && ViewBag.momen2 != ViewBag.momen3 && ViewBag.momen2 != ViewBag.momen4)
+                {
+
+                    <div class="maxcolor" style="display:flex; justify-content:center; align-items:center">@ViewBag.momen2</div>
+                }
+                else
+                {
+                    <div style="display:flex; justify-content:center; align-items:center">@ViewBag.momen2</div>
+                }
+                @if (ViewBag.momen3 == ViewBag.maxmm && ViewBag.momen3 != ViewBag.momen2 && ViewBag.momen3 != ViewBag.momen1 && ViewBag.momen3 != ViewBag.momen4)
+                {
+
+                    <div class="maxcolor" style="display:flex; justify-content:center; align-items:center">@ViewBag.momen3</div>
+                }
+                else
+                {
+                    <div style="display:flex; justify-content:center; align-items:center">@ViewBag.momen3</div>
+                }
+                @if (ViewBag.momen4 == ViewBag.maxmm && ViewBag.momen4 != ViewBag.momen2 && ViewBag.momen4 != ViewBag.momen3 && ViewBag.momen4 != ViewBag.momen1)
+                {
+
+                    <div class="maxcolor" style="display:flex; justify-content:center; align-items:center">@ViewBag.momen4</div>
+                }
+                else
+                {
+                    <div style="display:flex; justify-content:center; align-items:center">@ViewBag.momen4</div>
+                }
+                </div>
+                <div id="sosanh1" style="display:flex; justify-content:space-around; padding-bottom:10px;">
+                        <div style="display:flex; justify-content:center; align-items:center">@ViewBag.dongco1</div>
+                        <div style="display:flex; justify-content:center; align-items:center">@ViewBag.dongco2</div>
+                        <div style="display:flex; justify-content:center; align-items:center">@ViewBag.dongco3</div>
+                        <div style="display:flex; justify-content:center; align-items:center">@ViewBag.dongco4</div>
+                    </div>
+                    </div>
+        </div>
+        @*Kichthuoc*@
+        <div class="container" style="display:flex; justify-content:space-between; margin-top:20px; text-align:center;">
+            <div  style="min-height:50px; width:200px; border-radius:10px; box-shadow: 0px 1px 5px rgb(0,0,0,0.5)">
+                <div class="font-weight-bold" ; style="padding:10px 0 10px 0;">Kích thước</div>
+                <div id="sosanh1" style="padding-bottom:10px;">Số chỗ ngồi</div>
+                <div id="sosanh2" style="padding-bottom:10px;">Kích thước (mm)</div>
+                <div id="sosanh1" style="padding-bottom:10px;">Chiều dài cơ sở (mm)</div>
+                <div id="sosanh2" style="padding-bottom:10px;">Khoảng sáng gầm (mm)</div>
+                <div id="sosanh1" style="padding-bottom:10px;">Số túi khí</div>
+            </div>
+            <div style="min-height:150px; width:880px; border-radius:10px; box-shadow: 0px 1px 5px rgb(0,0,0,0.5);">
+                <div style="display:flex; justify-content:space-between; padding:10px 0 10px 0;">
+                    <br />
+                </div>
+                <div id="sosanh1" style="display:flex; justify-content:space-around; padding-bottom:10px;">
+                    @if (ViewBag.ghe1 == ViewBag.maxcn && ViewBag.ghe1 != ViewBag.ghe2 && ViewBag.ghe1 != ViewBag.ghe3 && ViewBag.ghe1 != ViewBag.ghe4)
+                    {
+
+                        <div class="maxcolor" style="display:flex; justify-content:center; align-items:center">@ViewBag.ghe1</div>
+                    }
+                    else
+                    {
+                        <div style="display:flex; justify-content:center; align-items:center">@ViewBag.ghe1</div>
+                    }
+                    @if (ViewBag.ghe2 == ViewBag.maxcn && ViewBag.ghe2 != ViewBag.ghe1 && ViewBag.ghe2 != ViewBag.ghe3 && ViewBag.ghe2 != ViewBag.ghe4)
+                    {
+
+                        <div class="maxcolor" style="display:flex; justify-content:center; align-items:center">@ViewBag.ghe2</div>
+                    }
+                    else
+                    {
+                        <div style="display:flex; justify-content:center; align-items:center">@ViewBag.ghe2</div>
+                    }
+                    @if (ViewBag.ghe3 == ViewBag.maxcn && ViewBag.ghe3 != ViewBag.ghe2 && ViewBag.ghe3 != ViewBag.ghe1 && ViewBag.ghe3 != ViewBag.ghe4)
+                    {
+
+                        <div class="maxcolor" style="display:flex; justify-content:center; align-items:center">@ViewBag.ghe3</div>
+                    }
+                    else
+                    {
+                        <div style="display:flex; justify-content:center; align-items:center">@ViewBag.ghe3</div>
+                    }
+                    @if (ViewBag.ghe4 == ViewBag.maxcn && ViewBag.ghe4 != ViewBag.ghe2 && ViewBag.ghe4 != ViewBag.ghe3 && ViewBag.ghe4 != ViewBag.ghe1)
+                    {
+
+                        <div class="maxcolor" style="display:flex; justify-content:center; align-items:center">@ViewBag.ghe4</div>
+                    }
+                    else
+                    {
+                        <div style="display:flex; justify-content:center; align-items:center">@ViewBag.ghe1</div>
+                    }
+                </div>
+                <div id="sosanh2" style="display:flex; justify-content:space-around; padding-bottom:10px;">
+                    <div style="display:flex; justify-content:center; align-items:center">@ViewBag.kichthuoc1</div>
+                    <div style="display:flex; justify-content:center; align-items:center">@ViewBag.kichthuoc2</div>
+                    <div style="display:flex; justify-content:center; align-items:center">@ViewBag.kichthuoc3</div>
+                    <div style="display:flex; justify-content:center; align-items:center">@ViewBag.kichthuoc4</div>
+                </div>
+                <div id="sosanh1" style="display:flex; justify-content:space-around; padding-bottom:10px;">
+                    @if (ViewBag.dai1 == ViewBag.maxcd && ViewBag.dai1 != ViewBag.dai2 && ViewBag.dai1 != ViewBag.dai3 && ViewBag.dai1 != ViewBag.dai4)
+                    {
+
+                        <div class="maxcolor" style="display:flex; justify-content:center; align-items:center">@ViewBag.dai1</div>
+                    }
+                    else
+                    {
+                        <div style="display:flex; justify-content:center; align-items:center">@ViewBag.dai1</div>
+                    }
+                    @if (ViewBag.dai2 == ViewBag.maxcd && ViewBag.dai2 != ViewBag.dai1 && ViewBag.dai2 != ViewBag.dai3 && ViewBag.dai2 != ViewBag.dai4)
+                    {
+
+                        <div class="maxcolor" style="display:flex; justify-content:center; align-items:center">@ViewBag.dai2</div>
+                    }
+                    else
+                    {
+                        <div style="display:flex; justify-content:center; align-items:center">@ViewBag.dai2</div>
+                    }
+                    @if (ViewBag.dai3 == ViewBag.maxcd && ViewBag.dai3 != ViewBag.dai2 && ViewBag.dai3 != ViewBag.dai1 && ViewBag.dai3 != ViewBag.dai4)
+                    {
+
+                        <div class="maxcolor" style="display:flex; justify-content:center; align-items:center">@ViewBag.dai3</div>
+                    }
+                    else
+                    {
+                        <div style="display:flex; justify-content:center; align-items:center">@ViewBag.dai3</div>
+                    }
+                    @if (ViewBag.dai4 == ViewBag.maxcd && ViewBag.dai4 != ViewBag.dai2 && ViewBag.dai4 != ViewBag.dai3 && ViewBag.dai4 != ViewBag.dai1)
+                    {
+
+                        <div class="maxcolor" style="display:flex; justify-content:center; align-items:center">@ViewBag.dai4</div>
+                    }
+                    else
+                    {
+                        <div style="display:flex; justify-content:center; align-items:center">@ViewBag.dai4</div>
+                    }
+                </div>
+                <div id="sosanh2" style="display:flex; justify-content:space-around; padding-bottom:10px;">
+                    @if (ViewBag.gam1 == ViewBag.maxgam && ViewBag.gam1 != ViewBag.gam2 && ViewBag.gam1 != ViewBag.gam3 && ViewBag.gam1 != ViewBag.gam4)
+                    {
+
+                        <div class="maxcolor" style="display:flex; justify-content:center; align-items:center">@ViewBag.gam1</div>
+                    }
+                    else
+                    {
+                        <div style="display:flex; justify-content:center; align-items:center">@ViewBag.gam1</div>
+                    }
+                    @if (ViewBag.gam2 == ViewBag.maxgam && ViewBag.gam2 != ViewBag.gam1 && ViewBag.gam2 != ViewBag.gam3 && ViewBag.gam2 != ViewBag.gam4)
+                    {
+
+                        <div class="maxcolor" style="display:flex; justify-content:center; align-items:center">@ViewBag.gam2</div>
+                    }
+                    else
+                    {
+                        <div style="display:flex; justify-content:center; align-items:center">@ViewBag.gam2</div>
+                    }
+                    @if (ViewBag.gam3 == ViewBag.maxgam && ViewBag.gam3 != ViewBag.gam2 && ViewBag.gam3 != ViewBag.gam1 && ViewBag.gam3 != ViewBag.gam4)
+                    {
+
+                        <div class="maxcolor" style="display:flex; justify-content:center; align-items:center">@ViewBag.gam3</div>
+                    }
+                    else
+                    {
+                        <div style="display:flex; justify-content:center; align-items:center">@ViewBag.gam3</div>
+                    }
+                    @if (ViewBag.gam4 == ViewBag.maxgam && ViewBag.gam4 != ViewBag.gam2 && ViewBag.gam4 != ViewBag.gam3 && ViewBag.gam4 != ViewBag.gam1)
+                    {
+
+                        <div class="maxcolor" style="display:flex; justify-content:center; align-items:center">@ViewBag.gam4</div>
+                    }
+                    else
+                    {
+                        <div style="display:flex; justify-content:center; align-items:center">@ViewBag.gam4</div>
+                    }
+                </div>
+                <div id="sosanh1" style="display:flex; justify-content:space-around; padding-bottom:10px;">
+                    <div style="display:flex; justify-content:center; align-items:center">@ViewBag.tuikhi1</div>
+                    <div style="display:flex; justify-content:center; align-items:center">@ViewBag.tuikhi2</div>
+                    <div style="display:flex; justify-content:center; align-items:center">@ViewBag.tuikhi3</div>
+                    <div style="display:flex; justify-content:center; align-items:center">@ViewBag.tuikhi4</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container" style="display:flex; justify-content:space-around; margin-top:20px; text-align:center;">
+            <div style="min-height:50px; width:200px; border-radius:10px; box-shadow: 0px 1px 5px rgb(0,0,0,0.5)">
+                <div class="font-weight-bold" ; style="padding:10px 0 10px 0;">Giá tham khảo</div>
+            </div>
+            <div style="width:880px; border-radius:10px; box-shadow: 0px 1px 5px rgb(0,0,0,0.5);">
+                <div style="display:flex; justify-content:space-around; padding:10px 0 10px 0;">
+                    <div style="display:flex; justify-content:center; align-items:center">@ViewBag.gia1.000.000</div>
+                    <div style="display:flex; justify-content:center; align-items:center">@ViewBag.gia2.000.000</div>
+                    <div style="display:flex; justify-content:center; align-items:center">@ViewBag.gia3.000.000</div>
+                    <div style="display:flex; justify-content:center; align-items:center">@ViewBag.gia4.000.000</div>
+                </div>
+            </div>
+            </div>
+        <footer class="bg-dark text-white text-center py-3" style="margin-top:50px">
+            <p>&copy; 2023 So sánh ô tô</p>
+        </footer>
+            @*<table id="sosanh" style="text-align:center">
+                <tr id="sosanh2">
+                
+                </tr>
+                <tr id="sosanh1">
+                    <td>Phiên bản</td>
+                    <td><p id="tt1" name="t1">@ViewBag.phienban1</p></td>
+                    <td><p id="tt2" name="t2">@ViewBag.phienban2</p></td>
+                    <td><p id="tt3" name="t3">@ViewBag.phienban3</p></td>
+                    <td><p id="tt4" name="t4">@ViewBag.phienban4</p></td>
+                </tr>
+            <tr id="sosanh2">
+                    <td>Hãng sản xuất</td>
+                    <td><p id="hsx1">@ViewBag.hangsx1</p></td>
+                    <td><p id="hsx2">@ViewBag.hangsx2</p></td>
+                    <td><p id="hsx2">@ViewBag.hangsx3</p></td>
+                    <td><p id="hsx2">@ViewBag.hangsx4</p></td>
+                </tr>
+            <tr id="sosanh1">
+                    <td>Loại xe</td>
+                    <td><p id="lx1">@ViewBag.loaixe1</p></td>
+                    <td><p id="lx2">@ViewBag.loaixe2</p></td>
+                    <td><p id="lx2">@ViewBag.loaixe3</p></td>
+                    <td><p id="lx2">@ViewBag.loaixe4</p></td>
+                </tr>
+            <tr id="sosanh2">
+                    <td>Phân khúc</td>
+                    <td><p id="pk1">@ViewBag.phankhuc1</p></td>
+                    <td><p id="pk2">@ViewBag.phankhuc2</p></td>
+                    <td><p id="pk2">@ViewBag.phankhuc3</p></td>
+                    <td><p id="pk2">@ViewBag.phankhuc4</p></td>
+                </tr>
+            <tr id="sosanh1">
+                    <td>Kiểu động cơ</td>
+                    <td><p id="pb1">@ViewBag.dongco1</p></td>
+                    <td><p id="pb2">@ViewBag.dongco2</p></td>
+                    <td><p id="pb2">@ViewBag.dongco3</p></td>
+                    <td><p id="pb2">@ViewBag.dongco4</p></td>
+                </tr>
+            <tr id="sosanh2">
+                    <td>Hộp số</td>
+                    <td><p id="hs1">@ViewBag.hopso1</p></td>
+                    <td><p id="hs2">@ViewBag.hopso2</p></td>
+                    <td><p id="hs2">@ViewBag.hopso3</p></td>
+                    <td><p id="hs2">@ViewBag.hopso4</p></td>
+                </tr>
+            <tr id="sosanh1">
+                    <td>Dung tích</td>
+                    <td><p id="dt1">@ViewBag.dungtich1</p></td>
+                    <td><p id="dt2">@ViewBag.dungtich2</p></td>
+                    <td><p id="dt2">@ViewBag.dungtich3</p></td>
+                    <td><p id="dt2">@ViewBag.dungtich4</p></td>
+                </tr>
+            <tr id="sosanh2">
+                    <td>Công suất</td>
+                    @if (ViewBag.congsuat1 == ViewBag.maxcs && ViewBag.congsuat1 != ViewBag.congsuat2 && ViewBag.congsuat1 != ViewBag.congsuat3 && ViewBag.congsuat1 != ViewBag.congsuat4)
+                    {
+
+                        <td><p id="cs1" class="maxcolor">@ViewBag.congsuat1</p></td>
+                    }
+                    else
+                    {
+                        <td><p id="cs1">@ViewBag.congsuat1</p></td>
+                    }
+                    @if (ViewBag.congsuat2 == ViewBag.maxcs && ViewBag.congsuat2 != ViewBag.congsuat1 && ViewBag.congsuat2 != ViewBag.congsuat3 && ViewBag.congsuat2 != ViewBag.congsuat4)
+                    {
+
+                        <td><p id="cs1" class="maxcolor">@ViewBag.congsuat2</p></td>
+                    }
+                    else
+                    {
+                        <td><p id="cs1">@ViewBag.congsuat2</p></td>
+                    }
+                    @if (ViewBag.congsuat3 == ViewBag.maxcs && ViewBag.congsuat3 != ViewBag.congsuat2 && ViewBag.congsuat3 != ViewBag.congsuat1 && ViewBag.congsuat3 != ViewBag.congsuat4)
+                    {
+
+                        <td><p id="cs1" class="maxcolor">@ViewBag.congsuat3</p></td>
+                    }
+                    else
+                    {
+                        <td><p id="cs1">@ViewBag.congsuat3</p></td>
+                    }
+                    @if (ViewBag.congsuat4 == ViewBag.maxcs && ViewBag.congsuat4 != ViewBag.congsuat2 && ViewBag.congsuat4 != ViewBag.congsuat3 && ViewBag.congsuat4 != ViewBag.congsuat1)
+                    {
+
+                        <td><p id="cs1" class="maxcolor">@ViewBag.congsuat4</p></td>
+                    }
+                    else
+                    {
+                        <td><p id="cs1">@ViewBag.congsuat4</p></td>
+                    }
+                </tr>
+            <tr id="sosanh1">
+                    <td>Mômen</td>
+                    @if (ViewBag.momen1 == ViewBag.maxmm && ViewBag.momen1 != ViewBag.momen2 && ViewBag.momen1 != ViewBag.momen3 && ViewBag.momen1 != ViewBag.momen4)
+                    {
+
+                        <td><p id="mm1" class="maxcolor">@ViewBag.momen1</p></td>
+                    }
+                    else
+                    {
+                        <td><p id="mm1">@ViewBag.momen1</p></td>
+                    }
+                    @if (ViewBag.momen2 == ViewBag.maxmm && ViewBag.momen2 != ViewBag.momen1 && ViewBag.momen2 != ViewBag.momen3 && ViewBag.momen2 != ViewBag.momen4)
+                    {
+
+                        <td><p id="mm1" class="maxcolor">@ViewBag.momen2</p></td>
+                    }
+                    else
+                    {
+                        <td><p id="mm1">@ViewBag.momen2</p></td>
+                    }
+                    @if (ViewBag.momen3 == ViewBag.maxmm && ViewBag.momen3 != ViewBag.momen2 && ViewBag.momen3 != ViewBag.momen1 && ViewBag.momen3 != ViewBag.momen4)
+                    {
+
+                        <td><p id="mm1" class="maxcolor">@ViewBag.momen3</p></td>
+                    }
+                    else
+                    {
+                        <td><p id="mm1">@ViewBag.momen3</p></td>
+                    }
+                    @if (ViewBag.momen4 == ViewBag.maxmm && ViewBag.momen4 != ViewBag.momen2 && ViewBag.momen4 != ViewBag.momen3 && ViewBag.momen4 != ViewBag.momen1)
+                    {
+
+                        <td><p id="mm1" class="maxcolor">@ViewBag.momen4</p></td>
+                    }
+                    else
+                    {
+                        <td><p id="mm1">@ViewBag.momen4</p></td>
+                    }
+                </tr>
+            <tr id="sosanh2">
+                    <td>Số chỗ ngồi</td>
+                    @if (ViewBag.ghe1 == ViewBag.maxcn && ViewBag.ghe1 != ViewBag.ghe2 && ViewBag.ghe1 != ViewBag.ghe3 && ViewBag.ghe1 != ViewBag.ghe4)
+                    {
+
+                        <td><p id="pb1" class="maxcolor">@ViewBag.ghe1</p></td>
+                    }
+                    else
+                    {
+                        <td><p id="pb1">@ViewBag.ghe1</p></td>
+                    }
+                    @if (ViewBag.ghe2 == ViewBag.maxcn && ViewBag.ghe2 != ViewBag.ghe1 && ViewBag.ghe2 != ViewBag.ghe3 && ViewBag.ghe2 != ViewBag.ghe4)
+                    {
+
+                        <td><p id="pb1" class="maxcolor">@ViewBag.ghe2</p></td>
+                    }
+                    else
+                    {
+                        <td><p id="pb1">@ViewBag.ghe2</p></td>
+                    }
+                    @if (ViewBag.ghe3 == ViewBag.maxcn && ViewBag.ghe3 != ViewBag.ghe2 && ViewBag.ghe3 != ViewBag.ghe1 && ViewBag.ghe3 != ViewBag.ghe4)
+                    {
+
+                        <td><p id="pb1" class="maxcolor">@ViewBag.ghe3</p></td>
+                    }
+                    else
+                    {
+                        <td><p id="pb1">@ViewBag.ghe3</p></td>
+                    }
+                    @if (ViewBag.ghe4 == ViewBag.maxcn && ViewBag.ghe4 != ViewBag.ghe2 && ViewBag.ghe4 != ViewBag.ghe3 && ViewBag.ghe4 != ViewBag.ghe1)
+                    {
+
+                        <td><p id="pb1" class="maxcolor">@ViewBag.ghe4</p></td>
+                    }
+                    else
+                    {
+                        <td><p id="pb1">@ViewBag.ghe4</p></td>
+                    }
+                </tr>
+            <tr id="sosanh1">
+                    <td>
+                        Kích thước
+                        <br />(mm)
+                    </td>
+                    <td><p id="pb1">@ViewBag.kichthuoc1</p></td>
+                    <td><p id="pb2">@ViewBag.kichthuoc2</p></td>
+                    <td><p id="pb2">@ViewBag.kichthuoc3</p></td>
+                    <td><p id="pb2">@ViewBag.kichthuoc4</p></td>
+                </tr>
+            <tr id="sosanh2">
+                    <td>
+                        Chiều dài cơ sở
+                        <br />(mm)
+
+                    </td>
+                    @if (ViewBag.dai1 == ViewBag.maxcd && ViewBag.dai1 != ViewBag.dai2 && ViewBag.dai1 != ViewBag.dai3 && ViewBag.dai1 != ViewBag.dai4)
+                    {
+
+                        <td><p id="pb1" class="maxcolor">@ViewBag.dai1</p></td>
+                    }
+                    else
+                    {
+                        <td><p id="pb1">@ViewBag.dai1</p></td>
+                    }
+                    @if (ViewBag.dai2 == ViewBag.maxcd && ViewBag.dai2 != ViewBag.dai1 && ViewBag.dai2 != ViewBag.dai3 && ViewBag.dai2 != ViewBag.dai4)
+                    {
+
+                        <td><p id="pb1" class="maxcolor">@ViewBag.dai2</p></td>
+                    }
+                    else
+                    {
+                        <td><p id="pb1">@ViewBag.dai2</p></td>
+                    }
+                    @if (ViewBag.dai3 == ViewBag.maxcd && ViewBag.dai3 != ViewBag.dai2 && ViewBag.dai3 != ViewBag.dai1 && ViewBag.dai3 != ViewBag.dai4)
+                    {
+
+                        <td><p id="pb1" class="maxcolor">@ViewBag.dai3</p></td>
+                    }
+                    else
+                    {
+                        <td><p id="pb1">@ViewBag.dai3</p></td>
+                    }
+                    @if (ViewBag.dai4 == ViewBag.maxcd && ViewBag.dai4 != ViewBag.dai2 && ViewBag.dai4 != ViewBag.dai3 && ViewBag.dai4 != ViewBag.dai1)
+                    {
+
+                        <td><p id="pb1" class="maxcolor">@ViewBag.dai4</p></td>
+                    }
+                    else
+                    {
+                        <td><p id="pb1">@ViewBag.dai4</p></td>
+                    }
+                </tr>
+            <tr id="sosanh1">
+                    <td>
+                        Khoảng sáng gầm
+                        <br />(mm)
+
+                    </td>
+                    @if (ViewBag.gam1 == ViewBag.maxgam && ViewBag.gam1 != ViewBag.gam2 && ViewBag.gam1 != ViewBag.gam3 && ViewBag.gam1 != ViewBag.gam4)
+                    {
+
+                        <td><p id="pb1" class="maxcolor">@ViewBag.gam1</p></td>
+                    }
+                    else
+                    {
+                        <td><p id="pb1">@ViewBag.gam1</p></td>
+                    }
+                    @if (ViewBag.gam2 == ViewBag.maxgam && ViewBag.gam2 != ViewBag.gam1 && ViewBag.gam2 != ViewBag.gam3 && ViewBag.gam2 != ViewBag.gam4)
+                    {
+
+                        <td><p id="pb1" class="maxcolor">@ViewBag.gam2</p></td>
+                    }
+                    else
+                    {
+                        <td><p id="pb1">@ViewBag.gam2</p></td>
+                    }
+                    @if (ViewBag.gam3 == ViewBag.maxgam && ViewBag.gam3 != ViewBag.gam2 && ViewBag.gam3 != ViewBag.gam1 && ViewBag.gam3 != ViewBag.gam4)
+                    {
+
+                        <td><p id="pb1" class="maxcolor">@ViewBag.gam3</p></td>
+                    }
+                    else
+                    {
+                        <td><p id="pb1">@ViewBag.gam3</p></td>
+                    }
+                    @if (ViewBag.gam4 == ViewBag.maxgam && ViewBag.gam4 != ViewBag.gam2 && ViewBag.gam4 != ViewBag.gam3 && ViewBag.gam4 != ViewBag.gam1)
+                    {
+
+                        <td><p id="pb1" class="maxcolor">@ViewBag.gam4</p></td>
+                    }
+                    else
+                    {
+                        <td><p id="pb1">@ViewBag.gam4</p></td>
+                    }
+                </tr>
+            <tr id="sosanh2">
+                    <td>Số túi khí</td>
+                    @if (ViewBag.tuikhi1 == ViewBag.maxtui && ViewBag.tuikhi1 != ViewBag.tuikhi2 && ViewBag.tuikhi1 != ViewBag.tuikhi3 && ViewBag.tuikhi1 != ViewBag.tuikhi4)
+                    {
+
+                        <td><p id="pb1" class="maxcolor">@ViewBag.tuikhi1</p></td>
+                    }
+                    else
+                    {
+                        <td><p id="pb1">@ViewBag.tuikhi1</p></td>
+                    }
+                    @if (ViewBag.tuikhi2 == ViewBag.maxtui && ViewBag.tuikhi2 != ViewBag.tuikhi1 && ViewBag.tuikhi2 != ViewBag.tuikhi3 && ViewBag.tuikhi2 != ViewBag.tuikhi4)
+                    {
+
+                        <td><p id="pb1" class="maxcolor">@ViewBag.tuikhi2</p></td>
+                    }
+                    else
+                    {
+                        <td><p id="pb1">@ViewBag.tuikhi2</p></td>
+                    }
+                    @if (ViewBag.tuikhi3 == ViewBag.maxtui && ViewBag.tuikhi3 != ViewBag.tuikhi2 && ViewBag.tuikhi3 != ViewBag.tuikhi1 && ViewBag.tuikhi3 != ViewBag.tuikhi4)
+                    {
+
+                        <td><p id="pb1" class="maxcolor">@ViewBag.tuikhi3</p></td>
+                    }
+                    else
+                    {
+                        <td><p id="pb1">@ViewBag.tuikhi3</p></td>
+                    }
+                    @if (ViewBag.tuikhi4 == ViewBag.maxtui && ViewBag.tuikhi4 != ViewBag.tuikhi2 && ViewBag.tuikhi4 != ViewBag.tuikhi3 && ViewBag.tuikhi4 != ViewBag.tuikhi1)
+                    {
+
+                        <td><p id="pb1" class="maxcolor">@ViewBag.tuikhi4</p></td>
+                    }
+                    else
+                    {
+                        <td><p id="pb1">@ViewBag.tuikhi4</p></td>
+                    }
+                </tr>
+            <tr id="sosanh1">
+                    <td>
+                        Giá tham khảo
+                        <br /> (VND)
+
+                    </td>
+                    <td><p id="pb1">@ViewBag.gia1.000.000</p></td>
+                    <td><p id="pb2">@ViewBag.gia2.000.000</p></td>
+                <td><p id="pb2">@ViewBag.gia3.000.000</p></td>
+                <td><p id="pb2">@ViewBag.gia4.000.000</p></td>
+                </tr>
+            </table>*@
+            <!-- The modal1 -->
+            <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModal1Label">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModal1Label">Chọn xe</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            <!-- Form to capture data -->
+
+                            <div class="form-group">
+                                <label>Chọn xe</label>
+                                @*<input type="text" class="form-control" id="nameInput" required>*@
+                                <select id="mySelect1" name="mySelect1" style="width:300px;">
+                                    <option>--Chọn xe--</option>
+                                    @foreach (var item in list)
+                                    {
+                                        <option value="@item.Phienban">@item.Phienban</option>
+                                    }
+                                </select>
+                            </div>
+                            @*<div class="form-group">
+                            <label for="emailInput">Email:</label>
+                            <input type="email" class="form-control" id="emailInput" required>
+                            </div>*@
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" id="saveButton" onclick="print1();">Xác nhận</button>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- The modal2 -->
+            <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModal2Label">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModal2Label">Chọn xe</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Form to capture data -->
+
+                            <div class="form-group">
+                                <label>Chọn xe</label>
+                                @*<input type="text" class="form-control" id="nameInput" required>*@
+                                <select id="mySelect2" name="mySelect2" style="width:300px;">
+                                    <option>--Chọn xe--</option>
+
+                                    @foreach (var item in list)
+                                    {
+                                        <option value="@item.Phienban">@item.Phienban</option>
+                                    }
+                                </select>
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" id="saveButton" onclick="print2();">Xác nhận</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- The modal3 -->
+            <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModal3Label">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModal3Label">Chọn xe</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Form to capture data -->
+
+                            <div class="form-group">
+                                <label>Chọn xe</label>
+                                @*<input type="text" class="form-control" id="nameInput" required>*@
+                                <select id="mySelect3" name="mySelect3" style="width:300px;">
+                                    <option>--Chọn xe--</option>
+                                    @foreach (var item in list)
+                                    {
+                                        <option value="@item.Phienban">@item.Phienban</option>
+                                    }
+                                </select>
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" id="saveButton" onclick="print3();">Xác nhận</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- The modal4 -->
+            <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModal4Label">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModal4Label">Chọn xe thứ tư bạn muốn so sánh</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Form to capture data -->
+
+                            <div class="form-group">
+                                <label>Chọn xe thứ tư:</label>
+                                @*<input type="text" class="form-control" id="nameInput" required>*@
+                                <select id="mySelect4" name="mySelect4" style="width:300px;">
+                                    <option>--Chọn xe--</option>
+
+                                    @foreach (var item in list)
+                                    {
+                                        <option value="@item.Phienban">@item.Phienban</option>
+                                    }
+                                </select>
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" id="saveButton" onclick="print4();">Xác nhận</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+    </form>
+
+    <script>
+        function show() {
+            document.getElementById('dataForm').style.display = 'block';
+        };
+        function print1() {
+            // Truy cập đối tượng select
+            var selectElement = document.getElementById("mySelect1");
+
+            // Truy cập phần tử được chọn
+            var selectedOption = selectElement.options[selectElement.selectedIndex];
+
+            // Lấy giá trị và nội dung của phần tử được chọn
+            var selectedValue = selectedOption.value;
+            var selectedText = selectedOption.text;
+
+            // In thông tin phần tử được chọn
+            if (selectedText != "--Chọn xe--")
+
+                document.getElementById("tt1").innerHTML = selectedText;
+            else document.getElementById("tt1").innerHTML = "";
+            selectedOption.value = selectedValue;
+            selectedOption.text = selectedText;
+        }
+        function print2() {
+            // Truy cập đối tượng select
+            var selectElement = document.getElementById("mySelect2");
+
+            // Truy cập phần tử được chọn
+            var selectedOption = selectElement.options[selectElement.selectedIndex];
+
+            // Lấy giá trị và nội dung của phần tử được chọn
+            var selectedValue = selectedOption.value;
+            var selectedText = selectedOption.text;
+            // In thông tin phần tử được chọn
+            if (selectedText != "--Chọn xe--")
+                document.getElementById("tt2").innerHTML = selectedText;
+            else document.getElementById("tt2").innerHTML = "";
+            selectedOption.value = selectedValue;
+            selectedOption.text = selectedText;
+        }
+        function print3() {
+            // Truy cập đối tượng select
+            var selectElement = document.getElementById("mySelect3");
+
+            // Truy cập phần tử được chọn
+            var selectedOption = selectElement.options[selectElement.selectedIndex];
+
+            // Lấy giá trị và nội dung của phần tử được chọn
+            var selectedValue = selectedOption.value;
+            var selectedText = selectedOption.text;
+
+            // In thông tin phần tử được chọn
+            if (selectedText != "--Chọn xe--")
+
+                document.getElementById("tt3").innerHTML = selectedText;
+            else document.getElementById("tt3").innerHTML = "";
+            selectedOption.value = selectedValue;
+            selectedOption.text = selectedText;
+        }
+        function print4() {
+            // Truy cập đối tượng select
+            var selectElement = document.getElementById("mySelect4");
+
+            // Truy cập phần tử được chọn
+            var selectedOption = selectElement.options[selectElement.selectedIndex];
+
+            // Lấy giá trị và nội dung của phần tử được chọn
+            var selectedValue = selectedOption.value;
+            var selectedText = selectedOption.text;
+
+            // In thông tin phần tử được chọn
+            if (selectedText != "--Chọn xe--")
+
+                document.getElementById("tt4").innerHTML = selectedText;
+            else document.getElementById("tt4").innerHTML = "";
+            selectedOption.value = selectedValue;
+            selectedOption.text = selectedText;
+        }
+
+                                                //$(document).ready(function () {
+                                                //    // Handle the click event of the "Save" button
+                                                //    $('#saveButton').click(function () {
+                                                //        var name = $('#nameInput').val();
+                                                //        var email = $('#emailInput').val();
+
+                                                //        // Perform any necessary data validation here
+
+                                                //        // Close the modal
+                                                //        $('#myModal').modal('hide');
+
+                                                //        // Make an AJAX request to submit the form data to the server
+                                                //        $.ajax({
+                                                //            url: '/Home/SaveData',
+                                                //            type: 'POST',
+                                                //            data: {
+                                                //                name: name,
+                                                //                email: email
+                                                //            },
+                                                //            success: function (response) {
+                                                //                // Handle the success response from the server
+                                                //                console.log(response);
+                                                //            },
+                                                //            error: function (error) {
+                                                //                // Handle the error response from the server
+                                                //                console.error(error);
+                                                //            }
+                                                //        });
+                                                //    });
+                                                //});
+    </script>
+</body>
+</html>
